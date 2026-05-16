@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TripApp | Listado de Trips</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+</head>
+<body>
+    <header th:insert="~{fragments/menu :: menu-principal}"></header>
+    
+    <main role="main" class="container" style="margin-top: 80px;">
+        <div class="card">
+            <h4 class="card-header"><strong>Trips en El Salvador</strong></h4>
+            <div class="card-body">
+                <a class="btn btn-primary" th:href="@{/trips/create}" title="Crear nuevo trip">
+                    <i class="fas fa-file"></i> Nuevo
+                </a>
+                <hr> 
+                <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+                
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Fecha Publicación</th>
+                            <th scope="col">Estatus</th>
+                            <th scope="col">Destacada</th>
+                            <th scope="col">Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr th:each="trip : ${trips}">
+    <td th:text="${trip.categoria != null ? trip.categoria.nombre : 'Sin Categoría'}"></td>
+    
+    <td th:text="${trip.nombre}"></td>
+    
+    <td th:text="${trip.fecha != null ? #dates.format(trip.fecha, 'dd-MM-yyyy') : '---'}"></td>
+    
+    <td th:text="${trip.estatus != null ? trip.estatus : 'Creada'}"></td>
+    
+    <td>
+        <span th:text="${trip.destacado == 1 ? 'SI' : 'NO'}" 
+              th:class="${trip.destacado == 1 ? 'badge badge-success' : 'badge badge-secondary'}">
+        </span>
+    </td>
+    
+    <td>
+        <a th:href="@{/trips/view/{id} (id=${trip.id})}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+        <a th:href="@{/trips/delete/{id} (id=${trip.id})}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    </td>
+</tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <footer th:insert="~{fragments/footer :: pie-pagina}"></footer>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

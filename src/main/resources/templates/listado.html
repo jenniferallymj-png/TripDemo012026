@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Categorías Trips</title>
+</head>
+<body>
+
+    <h1>Trips en El Salvador</h1>
+
+    <ol>
+        <li th:each="tempTrip : ${listadoTrips}"
+            th:text="${tempTrip}">
+        </li>
+    </ol>
+
+</body>
+</html>
